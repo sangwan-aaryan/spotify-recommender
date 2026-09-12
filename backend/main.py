@@ -4,33 +4,17 @@ from typing import Literal
 import numpy as np
 import pandas as pd
 
-from fastapi import (
-    FastAPI,
-    HTTPException
-)
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
-from fastapi.middleware.cors import (
-    CORSMiddleware
-)
-
-from pydantic import (
-    BaseModel,
-    Field
-)
+from pydantic import BaseModel, Field
 
 from scipy.sparse import load_npz
 
-from .content_based_filtering import (
-    content_recommendation
-)
-
-from .collaborative_filtering import (
-    collaborative_recommendation
-)
-
-from .hybrid_recommendations import (
-    HybridRecommenderSystem
-)
+from .content_based_filtering import content_recommendation
+from .collaborative_filtering import collaborative_recommendation
+from .hybrid_recommendations import HybridRecommenderSystem
 
 
 # =========================================================
@@ -77,15 +61,12 @@ INTERACTION_MATRIX_PATH = (
 # =========================================================
 
 app = FastAPI(
-
     title="Spotify Recommendation API",
-
     description=(
         "Spotify-like song recommendation "
         "API using Content-Based, "
         "Collaborative and Hybrid Filtering."
     ),
-
     version="1.0.0"
 )
 
@@ -100,9 +81,9 @@ app.add_middleware(
         "http://localhost:5500",
         "http://127.0.0.1:5500",
 
-        # Optional: keep these if you use them later
         "http://localhost:5173",
         "http://127.0.0.1:5173",
+
         "http://localhost:3000",
         "http://127.0.0.1:3000",
     ],
@@ -154,15 +135,10 @@ class RecommendationRequest(BaseModel):
 # =========================================================
 
 songs_data = None
-
 filtered_data = None
-
 transformed_data = None
-
 transformed_hybrid_data = None
-
 track_ids = None
-
 interaction_matrix = None
 
 
@@ -180,46 +156,30 @@ def load_recommendation_data():
     global interaction_matrix
 
     required_files = [
-
         CLEANED_DATA_PATH,
-
         COLLAB_DATA_PATH,
-
         TRANSFORMED_DATA_PATH,
-
         HYBRID_TRANSFORMED_DATA_PATH,
-
         TRACK_IDS_PATH,
-
         INTERACTION_MATRIX_PATH
     ]
 
     missing_files = [
-
         str(file)
-
         for file in required_files
-
         if not file.exists()
     ]
 
     if missing_files:
 
         raise FileNotFoundError(
-
             "Required recommendation files are missing:\n\n"
-
             + "\n".join(missing_files)
-
-            +
-
-            "\n\nRun:\n"
+            + "\n\nRun:\n"
             "python -m backend.build_models"
         )
 
-    print(
-        "\nLoading recommendation data..."
-    )
+    print("\nLoading recommendation data...")
 
     # -----------------------------------------------------
     # CSV
@@ -323,26 +283,6 @@ def startup_event():
 
 
 # =========================================================
-# ROOT
-# =========================================================
-
-@app.get("/")
-def root():
-
-    return {
-
-        "message":
-        "Spotify Recommendation API",
-
-        "status":
-        "running",
-
-        "docs":
-        "/docs"
-    }
-
-
-# =========================================================
 # HEALTH
 # =========================================================
 
@@ -350,12 +290,8 @@ def root():
 def health():
 
     return {
-
-        "status":
-        "healthy",
-
-        "models_loaded":
-        songs_data is not None
+        "status": "healthy",
+        "models_loaded": songs_data is not None
     }
 
 
@@ -375,9 +311,7 @@ def recommend(
     if songs_data is None:
 
         raise HTTPException(
-
             status_code=503,
-
             detail=(
                 "Recommendation data is not loaded. "
                 "Run: python -m backend.build_models"
@@ -408,15 +342,10 @@ def recommend(
 
             recommendations = (
                 content_recommendation(
-
                     song_name=song_name,
-
                     artist_name=artist_name,
-
                     songs_data=songs_data,
-
                     transformed_data=transformed_data,
-
                     k=request.k
                 )
             )
@@ -424,36 +353,23 @@ def recommend(
         except ValueError as error:
 
             raise HTTPException(
-
                 status_code=404,
-
                 detail=str(error)
             )
 
         return {
-
             "success": True,
-
-            "song_name":
-            request.song_name,
-
-            "artist_name":
-            request.artist_name,
-
-            "filtering_type":
-            request.filtering_type,
-
-            "diversity":
-            request.diversity,
-
-            "count":
-            len(recommendations),
-
-            "recommendations":
-            recommendations
-            .fillna("")
-            .to_dict(
-                orient="records"
+            "song_name": request.song_name,
+            "artist_name": request.artist_name,
+            "filtering_type": request.filtering_type,
+            "diversity": request.diversity,
+            "count": len(recommendations),
+            "recommendations": (
+                recommendations
+                .fillna("")
+                .to_dict(
+                    orient="records"
+                )
             )
         }
 
@@ -466,7 +382,6 @@ def recommend(
     ):
 
         matching_song = filtered_data[
-
             (
                 filtered_data["name"]
                 .astype(str)
@@ -474,9 +389,7 @@ def recommend(
                 .str.strip()
                 == song_name
             )
-
             &
-
             (
                 filtered_data["artist"]
                 .astype(str)
@@ -489,9 +402,7 @@ def recommend(
         if matching_song.empty:
 
             raise HTTPException(
-
                 status_code=404,
-
                 detail=(
                     "This song is not available "
                     "in the collaborative dataset."
@@ -502,17 +413,11 @@ def recommend(
 
             recommendations = (
                 collaborative_recommendation(
-
                     song_name=song_name,
-
                     artist_name=artist_name,
-
                     track_ids=track_ids,
-
                     songs_data=filtered_data,
-
                     interaction_matrix=interaction_matrix,
-
                     k=request.k
                 )
             )
@@ -520,36 +425,23 @@ def recommend(
         except ValueError as error:
 
             raise HTTPException(
-
                 status_code=404,
-
                 detail=str(error)
             )
 
         return {
-
             "success": True,
-
-            "song_name":
-            request.song_name,
-
-            "artist_name":
-            request.artist_name,
-
-            "filtering_type":
-            request.filtering_type,
-
-            "diversity":
-            request.diversity,
-
-            "count":
-            len(recommendations),
-
-            "recommendations":
-            recommendations
-            .fillna("")
-            .to_dict(
-                orient="records"
+            "song_name": request.song_name,
+            "artist_name": request.artist_name,
+            "filtering_type": request.filtering_type,
+            "diversity": request.diversity,
+            "count": len(recommendations),
+            "recommendations": (
+                recommendations
+                .fillna("")
+                .to_dict(
+                    orient="records"
+                )
             )
         }
 
@@ -562,7 +454,6 @@ def recommend(
     ):
 
         matching_song = filtered_data[
-
             (
                 filtered_data["name"]
                 .astype(str)
@@ -570,9 +461,7 @@ def recommend(
                 .str.strip()
                 == song_name
             )
-
             &
-
             (
                 filtered_data["artist"]
                 .astype(str)
@@ -592,15 +481,10 @@ def recommend(
 
                 recommendations = (
                     content_recommendation(
-
                         song_name=song_name,
-
                         artist_name=artist_name,
-
                         songs_data=songs_data,
-
                         transformed_data=transformed_data,
-
                         k=request.k
                     )
                 )
@@ -608,36 +492,24 @@ def recommend(
             except ValueError as error:
 
                 raise HTTPException(
-
                     status_code=404,
-
                     detail=str(error)
                 )
 
             return {
-
                 "success": True,
-
-                "song_name":
-                request.song_name,
-
-                "artist_name":
-                request.artist_name,
-
+                "song_name": request.song_name,
+                "artist_name": request.artist_name,
                 "filtering_type":
-                "Hybrid fallback (Content-Based)",
-
-                "diversity":
-                request.diversity,
-
-                "count":
-                len(recommendations),
-
-                "recommendations":
-                recommendations
-                .fillna("")
-                .to_dict(
-                    orient="records"
+                    "Hybrid fallback (Content-Based)",
+                "diversity": request.diversity,
+                "count": len(recommendations),
+                "recommendations": (
+                    recommendations
+                    .fillna("")
+                    .to_dict(
+                        orient="records"
+                    )
                 )
             }
 
@@ -654,12 +526,10 @@ def recommend(
 
         recommender = (
             HybridRecommenderSystem(
-
                 number_of_recommendations=
-                request.k,
-
+                    request.k,
                 weight_content_based=
-                content_based_weight
+                    content_based_weight
             )
         )
 
@@ -668,68 +538,45 @@ def recommend(
             recommendations = (
                 recommender
                 .give_recommendations(
-
                     song_name=song_name,
-
                     artist_name=artist_name,
-
                     songs_data=filtered_data,
-
                     transformed_matrix=
-                    transformed_hybrid_data,
-
+                        transformed_hybrid_data,
                     track_ids=track_ids,
-
                     interaction_matrix=
-                    interaction_matrix
+                        interaction_matrix
                 )
             )
 
         except ValueError as error:
 
             raise HTTPException(
-
                 status_code=404,
-
                 detail=str(error)
             )
 
         return {
-
             "success": True,
-
-            "song_name":
-            request.song_name,
-
-            "artist_name":
-            request.artist_name,
-
-            "filtering_type":
-            request.filtering_type,
-
-            "diversity":
-            request.diversity,
-
-            "content_weight":
-            round(
+            "song_name": request.song_name,
+            "artist_name": request.artist_name,
+            "filtering_type": request.filtering_type,
+            "diversity": request.diversity,
+            "content_weight": round(
                 content_based_weight,
                 2
             ),
-
-            "collaborative_weight":
-            round(
+            "collaborative_weight": round(
                 1 - content_based_weight,
                 2
             ),
-
-            "count":
-            len(recommendations),
-
-            "recommendations":
-            recommendations
-            .fillna("")
-            .to_dict(
-                orient="records"
+            "count": len(recommendations),
+            "recommendations": (
+                recommendations
+                .fillna("")
+                .to_dict(
+                    orient="records"
+                )
             )
         }
 
@@ -738,8 +585,20 @@ def recommend(
     # =====================================================
 
     raise HTTPException(
-
         status_code=400,
-
         detail="Invalid filtering type."
     )
+
+
+# =========================================================
+# FRONTEND
+# =========================================================
+
+app.mount(
+    "/",
+    StaticFiles(
+        directory="frontend",
+        html=True
+    ),
+    name="frontend"
+)
