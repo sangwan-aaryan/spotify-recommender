@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Spotify Recommender
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- ================================================
+         BACKGROUND
+    ================================================= -->
+
+    <div class="background-glow glow-one"></div>
+
+    <div class="background-glow glow-two"></div>
+
+
+    <!-- ================================================
+         NAVBAR
+    ================================================= -->
+
+    <header class="navbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ♪
+            </div>
+
+            <div class="brand-name">
+                Spot<span>i</span>fy Recommender
+            </div>
+
+        </div>
+
+
+        <div class="api-status">
+
+            <span class="status-dot"></span>
+
+            <span>
+                AI Recommendation Engine
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================
+         MAIN
+    ================================================= -->
+
+    <main class="main-container">
+
+
+        <!-- =============================================
+             HERO
+        ============================================== -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+
+                ✦
+
+                AI-Powered Music Discovery
+
+            </div>
+
+
+            <h1>
+
+                Find your next
+
+                <span>
+                    favorite song.
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Enter a song you love and let our
+                recommendation engine discover
+                tracks you'll enjoy.
+
+            </p>
+
+        </section>
+
+
+        <!-- =============================================
+             SEARCH CARD
+        ============================================== -->
+
+        <section class="search-card">
+
+
+            <!-- SONG NAME -->
+
+            <div class="input-group">
+
+                <label for="songName">
+                    ♪ Song Name
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="songName"
+                        placeholder="e.g. Shape of You"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- ARTIST -->
+
+            <div class="input-group">
+
+                <label for="artistName">
+                    🎤 Artist
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="artistName"
+                        placeholder="e.g. Ed Sheeran"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RECOMMENDATION METHOD -->
+
+            <div class="input-group">
+
+                <label for="filteringType">
+                    ⚙ Recommendation Method
+                </label>
+
+
+                <select id="filteringType">
+
+                    <option value="Hybrid Recommender System">
+                        Hybrid Recommender System
+                    </option>
+
+                    <option value="Content-Based Filtering">
+                        Content-Based Filtering
+                    </option>
+
+                    <option value="Collaborative Filtering">
+                        Collaborative Filtering
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- NUMBER OF SONGS -->
+
+            <div class="input-group">
+
+                <label for="recommendationCount">
+                    🔢 Number of Songs
+                </label>
+
+
+                <select id="recommendationCount">
+
+                    <option value="5">
+                        5 Songs
+                    </option>
+
+                    <option value="10" selected>
+                        10 Songs
+                    </option>
+
+                    <option value="15">
+                        15 Songs
+                    </option>
+
+                    <option value="20">
+                        20 Songs
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DIVERSITY -->
+
+            <div class="diversity-section">
+
+                <div class="diversity-header">
+
+                    <label>
+                        Diversity
+                    </label>
+
+                    <span id="diversityValue">
+                        5/10
+                    </span>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="diversity"
+                    min="1"
+                    max="10"
+                    value="5"
+                >
+
+
+                <div class="range-labels">
+
+                    <span>
+                        More Similar
+                    </span>
+
+                    <span>
+                        More Diverse
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                id="recommendButton"
+                class="recommend-button"
+            >
+
+                <span id="buttonIcon">
+                    ✦
+                </span>
+
+                <span id="buttonText">
+                    Get Recommendations
+                </span>
+
+            </button>
+
+
+        </section>
+
+
+        <!-- =============================================
+             ERROR
+        ============================================== -->
+
+        <div
+            id="errorMessage"
+            class="error-message hidden"
+        >
+
+            <span>
+                ⚠
+            </span>
+
+            <span id="errorText"></span>
+
+        </div>
+
+
+        <!-- =============================================
+             RESULTS
+        ============================================== -->
+
+        <section
+            id="resultsSection"
+            class="results-section hidden"
+        >
+
+
+            <!-- RESULTS HEADER -->
+
+            <div class="results-header">
+
+                <div>
+
+                    <p class="results-label">
+                        YOUR RESULTS
+                    </p>
+
+                    <h2>
+                        Recommended for you
+                    </h2>
+
+                </div>
+
+
+                <div class="result-count">
+
+                    <span id="resultCount">
+                        0
+                    </span>
+
+                    <small>
+                        songs
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- CURRENT SONG -->
+
+            <div class="current-song">
+
+                <div class="current-icon">
+                    ♪
+                </div>
+
+
+                <div class="current-info">
+
+                    <span>
+                        Based on
+                    </span>
+
+                    <strong id="currentSongName">
+                        -
+                    </strong>
+
+                    <small id="currentArtistName">
+                        -
+                    </small>
+
+                </div>
+
+
+                <div
+                    id="methodBadge"
+                    class="method-badge"
+                >
+                    Hybrid Recommender System
+                </div>
+
+            </div>
+
+
+            <!-- RECOMMENDATIONS -->
+
+            <div
+                id="recommendationsGrid"
+                class="recommendations-grid"
+            >
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================
+         FOOTER
+    ================================================= -->
+
+    <footer>
+
+        Built with FastAPI + Machine Learning
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

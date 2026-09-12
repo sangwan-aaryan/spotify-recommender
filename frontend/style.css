@@ -1,0 +1,1189 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #09090b;
+
+    color: #ffffff;
+
+    min-width: 320px;
+}
+
+
+/* =========================================================
+   APP BACKGROUND
+========================================================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(30, 215, 96, 0.13),
+            transparent 35%
+        ),
+        #09090b;
+}
+
+
+.background-glow {
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: 0.10;
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+.glow-one {
+    background: #1ed760;
+
+    top: 250px;
+
+    left: -300px;
+}
+
+
+.glow-two {
+    background: #5b5bf7;
+
+    bottom: -250px;
+
+    right: -250px;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+    width: 100%;
+
+    height: 74px;
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+}
+
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    background: #1ed760;
+
+    color: #050505;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+
+.brand-name {
+    font-size: 18px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.4px;
+}
+
+
+.brand-name span {
+    color: #1ed760;
+}
+
+
+.api-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #85858d;
+
+    font-size: 12px;
+}
+
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #1ed760;
+
+    box-shadow:
+        0 0 10px
+        rgba(30, 215, 96, 0.7);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.main-container {
+    width: 100%;
+
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    padding:
+        70px 28px 100px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    max-width: 720px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
+}
+
+
+.hero-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding:
+        8px 14px;
+
+    margin-bottom: 22px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(30, 215, 96, 0.08);
+
+    border:
+        1px solid
+        rgba(30, 215, 96, 0.16);
+
+    color: #7ae9a2;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.hero h1 {
+    font-size:
+        clamp(42px, 6vw, 68px);
+
+    line-height: 1.05;
+
+    letter-spacing: -3px;
+
+    font-weight: 800;
+
+    margin-bottom: 22px;
+}
+
+
+.hero h1 span {
+    display: block;
+
+    color: #1ed760;
+}
+
+
+.hero p {
+    max-width: 590px;
+
+    margin: 0 auto;
+
+    color: #96969f;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   SEARCH CARD
+========================================================= */
+
+.search-card {
+    width: 100%;
+
+    padding: 28px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 22px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(20, 20, 24, 0.90);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, 0.30);
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.input-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+.input-group label {
+    color: #c8c8ce;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrapper {
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 0 14px;
+
+    border-radius: 11px;
+
+    background: #111114;
+
+    border:
+        1px solid
+        #2b2b31;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.input-wrapper:focus-within {
+    border-color: #1ed760;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(30, 215, 96, 0.08);
+}
+
+
+.input-icon {
+    color: #66666e;
+
+    font-size: 14px;
+}
+
+
+.input-wrapper input {
+    width: 100%;
+
+    height: 100%;
+
+    outline: none;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 13px;
+}
+
+
+.input-wrapper input::placeholder {
+    color: #55555d;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.input-group select {
+    width: 100%;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    border-radius: 11px;
+
+    border:
+        1px solid
+        #2b2b31;
+
+    outline: none;
+
+    background: #111114;
+
+    color: #e5e5e8;
+
+    font-size: 13px;
+
+    cursor: pointer;
+}
+
+
+.input-group select:focus {
+    border-color: #1ed760;
+}
+
+
+/* =========================================================
+   DIVERSITY
+========================================================= */
+
+.diversity-section {
+    grid-column: 1 / -1;
+
+    padding:
+        5px 2px;
+}
+
+
+.diversity-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+}
+
+
+.diversity-header label {
+    color: #c8c8ce;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.diversity-header span {
+    color: #1ed760;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+#diversity {
+    width: 100%;
+
+    height: 5px;
+
+    appearance: none;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    background: #303036;
+}
+
+
+#diversity::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border:
+        4px solid
+        #1ed760;
+
+    cursor: pointer;
+}
+
+
+#diversity::-moz-range-thumb {
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    border:
+        4px solid
+        #1ed760;
+
+    cursor: pointer;
+}
+
+
+.range-labels {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #5d5d65;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   RECOMMEND BUTTON
+========================================================= */
+
+.recommend-button {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #1ed760;
+
+    color: #050505;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    transition:
+        transform 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.recommend-button:hover {
+    background: #24e86a;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(30, 215, 96, 0.18);
+}
+
+
+.recommend-button:disabled {
+    opacity: 0.65;
+
+    cursor: wait;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+.error-message {
+    margin-top: 20px;
+
+    padding: 14px 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255, 70, 70, 0.08);
+
+    border:
+        1px solid
+        rgba(255, 70, 70, 0.18);
+
+    color: #ff9a9a;
+
+    font-size: 13px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.results-section {
+    margin-top: 70px;
+}
+
+
+.results-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+
+.results-label {
+    color: #1ed760;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 7px;
+}
+
+
+.results-header h2 {
+    font-size: 28px;
+
+    letter-spacing: -1px;
+}
+
+
+.result-count {
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+.result-count small {
+    color: #696970;
+
+    font-size: 11px;
+
+    font-weight: 500;
+
+    margin-left: 5px;
+}
+
+
+/* =========================================================
+   CURRENT SONG
+========================================================= */
+
+.current-song {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 16px;
+
+    margin-bottom: 18px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(30, 215, 96, 0.05);
+
+    border:
+        1px solid
+        rgba(30, 215, 96, 0.12);
+}
+
+
+.current-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #1ed760;
+
+    color: #050505;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+
+.current-info {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.current-info span {
+    color: #707078;
+
+    font-size: 10px;
+}
+
+
+.current-info strong {
+    color: #ffffff;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.current-info small {
+    color: #777780;
+
+    font-size: 11px;
+}
+
+
+.method-badge {
+    margin-left: auto;
+
+    padding:
+        7px 10px;
+
+    border:
+        1px solid
+        #2c2c32;
+
+    border-radius: 20px;
+
+    color: #8b8b93;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RECOMMENDATION GRID
+========================================================= */
+
+.recommendations-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   SONG CARD
+========================================================= */
+
+.song-card {
+    min-width: 0;
+
+    padding: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    border-radius: 13px;
+
+    background: #111114;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+
+.song-card:hover {
+    background: #17171b;
+
+    border-color:
+        rgba(30, 215, 96, 0.18);
+
+    transform: translateY(-1px);
+}
+
+
+.song-number {
+    width: 25px;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    color: #55555d;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SONG ART
+========================================================= */
+
+.song-art {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1ed760,
+            #126c37
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #05140a;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SONG INFO
+========================================================= */
+
+.song-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.song-info h3 {
+    color: #eeeeef;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    margin-bottom: 4px;
+}
+
+
+.song-info p {
+    color: #777780;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    margin-bottom: 7px;
+}
+
+
+.score-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.score-row span {
+    color: #55555e;
+
+    font-size: 9px;
+}
+
+
+.score-row strong {
+    color: #1ed760;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
+
+.play-button {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        #303036;
+
+    background: #1a1a1e;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        color 0.2s;
+}
+
+
+.play-button:hover {
+    background: #1ed760;
+
+    border-color: #1ed760;
+
+    color: #050505;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    padding: 25px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    text-align: center;
+
+    color: #505058;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   LOADING ANIMATION
+========================================================= */
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+
+    border:
+        2px solid
+        rgba(0, 0, 0, 0.2);
+
+    border-top-color: #050505;
+
+    border-radius: 50%;
+
+    animation:
+        spin 0.8s linear infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 750px) {
+
+    .navbar {
+        padding: 0 18px;
+    }
+
+
+    .api-status {
+        display: none;
+    }
+
+
+    .main-container {
+        padding:
+            50px 18px 70px;
+    }
+
+
+    .search-card {
+        grid-template-columns: 1fr;
+
+        padding: 20px;
+    }
+
+
+    .diversity-section {
+        grid-column: auto;
+    }
+
+
+    .recommend-button {
+        grid-column: auto;
+    }
+
+
+    .recommendations-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .method-badge {
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .navbar {
+        height: 65px;
+    }
+
+
+    .brand-name {
+        font-size: 15px;
+    }
+
+
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 19px;
+    }
+
+
+    .main-container {
+        padding:
+            42px 14px 60px;
+    }
+
+
+    .hero {
+        margin-bottom: 32px;
+    }
+
+
+    .hero h1 {
+        font-size: 40px;
+
+        letter-spacing: -2px;
+    }
+
+
+    .hero p {
+        font-size: 13px;
+    }
+
+
+    .search-card {
+        padding: 17px;
+
+        border-radius: 17px;
+    }
+
+
+    .results-section {
+        margin-top: 50px;
+    }
+
+
+    .results-header h2 {
+        font-size: 23px;
+    }
+
+
+    .current-song {
+        align-items: flex-start;
+    }
+
+
+    .song-card {
+        padding: 11px;
+
+        gap: 9px;
+    }
+
+
+    .song-number {
+        display: none;
+    }
+
+}

@@ -1,0 +1,15 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.vscode/
+.env
+
+# Large raw dataset
+data/User Listening History.csv
+
+# Development notebooks
+notebooks/
+
+# Original raw music dataset
+data/Music Info.csv
