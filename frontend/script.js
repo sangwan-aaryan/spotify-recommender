@@ -9,8 +9,8 @@
 // API CONFIGURATION
 // =========================================================
 
-const API_URL =
-    "http://127.0.0.1:8000/recommend";
+const API_URL = "/recommend";
+const HEALTH_URL = "/health";
 
 
 // =========================================================
@@ -210,10 +210,7 @@ async function checkBackend() {
 
     try {
 
-        const response =
-            await fetch(
-                "http://127.0.0.1:8000/health"
-            );
+        const response = await fetch(HEALTH_URL);
 
 
         if (!response.ok) {
@@ -505,8 +502,7 @@ async function getRecommendations() {
 
             message =
                 "Cannot connect to the backend. " +
-                "Make sure FastAPI is running on " +
-                "http://127.0.0.1:8000";
+                "Make sure FastAPI is running.";
 
             setBackendStatus(false);
 
