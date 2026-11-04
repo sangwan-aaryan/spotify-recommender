@@ -11,6 +11,7 @@
 
 const API_URL = "/recommend";
 const HEALTH_URL = "/health";
+const SONGS_URL = "/songs";
 
 
 // =========================================================
@@ -94,6 +95,18 @@ const recommendationsGrid =
         "recommendationsGrid"
     );
 
+const songCatalogElement =
+    document.getElementById("songCatalog");
+
+const songCatalogStatus =
+    document.getElementById("songCatalogStatus");
+
+const songSearchInput =
+    document.getElementById("songSearch");
+
+const randomSongButton =
+    document.getElementById("randomSongButton");
+
 
 // =========================================================
 // AUDIO STATE
@@ -102,6 +115,10 @@ const recommendationsGrid =
 let currentAudio = null;
 
 let currentPlayButton = null;
+
+let songCatalog = [];
+
+let selectedSong = null;
 
 
 // =========================================================
@@ -116,8 +133,217 @@ document.addEventListener(
 
         checkBackend();
 
+        loadSongCatalog();
+
     }
 );
+
+
+// =========================================================
+// SONG PICKER
+// =========================================================
+
+randomSongButton.addEventListener(
+    "click",
+    () => {
+
+        if (songCatalog.length === 0) {
+            return;
+        }
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * songCatalog.length
+            );
+
+        songSearchInput.value = "";
+        renderSongCatalog();
+        selectSong(songCatalog[randomIndex], randomIndex);
+
+    }
+);
+
+songSearchInput.addEventListener(
+    "input",
+    renderSongCatalog
+);
+
+
+async function loadSongCatalog() {
+
+    try {
+
+        const response =
+            await fetch(SONGS_URL);
+
+        if (!response.ok) {
+            throw new Error(
+                `Song catalog request failed (${response.status}).`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (!Array.isArray(data.songs)) {
+            throw new Error(
+                "The song catalog response is invalid."
+            );
+        }
+
+        songCatalog =
+            data.songs.filter(
+                (song) =>
+                    typeof song.name === "string" &&
+                    typeof song.artist === "string"
+            );
+
+        renderSongCatalog();
+
+        randomSongButton.disabled =
+            songCatalog.length === 0;
+
+        songCatalogStatus.textContent =
+            songCatalog.length > 0
+                ? `Showing ${songCatalog.length} songs. Select one or pick at random.`
+                : "No songs are available right now.";
+
+    } catch (error) {
+
+        console.error("Could not load the song catalog:", error);
+
+        songCatalogStatus.textContent =
+            "Couldn't load the song list. Please try again later.";
+
+    }
+}
+
+
+function renderSongCatalog() {
+
+    songCatalogElement.replaceChildren();
+
+    const query =
+        songSearchInput.value.trim().toLocaleLowerCase();
+
+    const visibleSongs =
+        songCatalog
+            .map((song, index) => ({ song, index }))
+            .filter(
+                ({ song }) =>
+                    `${song.name} ${song.artist}`
+                        .toLocaleLowerCase()
+                        .includes(query)
+            );
+
+    songCatalogStatus.textContent =
+        query
+            ? `Showing ${visibleSongs.length} of ${songCatalog.length} songs.`
+            : `Showing ${songCatalog.length} songs. Select one or pick at random.`;
+
+    if (visibleSongs.length === 0) {
+
+        const emptyItem =
+            document.createElement("li");
+
+        emptyItem.className = "catalog-empty";
+        emptyItem.textContent = "No songs match that search.";
+        songCatalogElement.append(emptyItem);
+
+        return;
+    }
+
+    visibleSongs.forEach(
+        ({ song, index }) => {
+
+            const item =
+                document.createElement("li");
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+            button.className = "song-picker-item";
+            button.dataset.songIndex = String(index);
+
+            const isSelected =
+                selectedSong?.name === song.name &&
+                selectedSong?.artist === song.artist;
+
+            button.classList.toggle("selected", isSelected);
+            button.setAttribute("aria-pressed", String(isSelected));
+
+            const icon =
+                document.createElement("span");
+
+            icon.className = "catalog-track-icon";
+            icon.setAttribute("aria-hidden", "true");
+            icon.textContent = "♫";
+
+            const copy =
+                document.createElement("span");
+
+            copy.className = "catalog-track-copy";
+
+            const songName =
+                document.createElement("span");
+
+            songName.className = "song-picker-name";
+            songName.textContent = song.name;
+
+            const artistName =
+                document.createElement("span");
+
+            artistName.className = "song-picker-artist";
+            artistName.textContent = song.artist;
+
+            copy.append(songName, artistName);
+            button.append(icon, copy);
+
+            button.addEventListener(
+                "click",
+                () => selectSong(song, index)
+            );
+
+            item.append(button);
+            songCatalogElement.append(item);
+
+        }
+    );
+}
+
+
+function selectSong(song, selectedIndex) {
+
+    selectedSong = song;
+
+    songNameInput.value = song.name;
+    artistNameInput.value = song.artist;
+
+    songCatalogElement
+        .querySelectorAll(".song-picker-item")
+        .forEach(
+            (button, index) => {
+
+                const isSelected =
+                    Number(button.dataset.songIndex) === selectedIndex;
+
+                button.classList.toggle(
+                    "selected",
+                    isSelected
+                );
+
+                button.setAttribute(
+                    "aria-pressed",
+                    String(isSelected)
+                );
+
+            }
+        );
+
+    songCatalogStatus.textContent =
+        `Selected "${song.name}" by ${song.artist}.`;
+}
 
 
 // =========================================================
@@ -270,10 +496,10 @@ function setBackendStatus(
     if (isOnline) {
 
         statusDot.style.background =
-            "#1ed760";
+            "#d3fb65";
 
         statusDot.style.boxShadow =
-            "0 0 10px rgba(30, 215, 96, 0.7)";
+            "0 0 12px rgba(211, 251, 101, 0.55)";
 
         statusText.textContent =
             "AI Recommendation Engine";
@@ -1090,49 +1316,29 @@ function resetPlayButton() {
 
 function showEmptyResults() {
 
-    recommendationsGrid.innerHTML = `
+    const emptyState =
+        document.createElement("div");
 
-        <div
-            style="
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 60px 20px;
-                border: 1px dashed #2b2b31;
-                border-radius: 15px;
-                color: #66666e;
-            "
-        >
+    emptyState.className = "empty-results";
 
-            <div
-                style="
-                    font-size: 36px;
-                    margin-bottom: 12px;
-                "
-            >
-                ♪
-            </div>
+    const icon =
+        document.createElement("span");
 
-            <h3
-                style="
-                    color: #aaaab1;
-                    font-size: 15px;
-                    margin-bottom: 7px;
-                "
-            >
-                No recommendations found
-            </h3>
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "♫";
 
-            <p
-                style="
-                    font-size: 12px;
-                "
-            >
-                Try another song and artist.
-            </p>
+    const heading =
+        document.createElement("h3");
 
-        </div>
+    heading.textContent = "No recommendations found";
 
-    `;
+    const description =
+        document.createElement("p");
+
+    description.textContent = "Try another song and artist.";
+
+    emptyState.append(icon, heading, description);
+    recommendationsGrid.replaceChildren(emptyState);
 }
 
 
@@ -1199,10 +1405,10 @@ function setLoading(
     } else {
 
         buttonIcon.textContent =
-            "✦";
+            "↗";
 
         buttonText.textContent =
-            "Get Recommendations";
+            "Find my next favorite";
 
     }
 
