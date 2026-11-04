@@ -8,7 +8,6 @@ from category_encoders import CountEncoder
 
 from sklearn.compose import ColumnTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import (
     MinMaxScaler,
     OneHotEncoder,
@@ -19,6 +18,8 @@ from scipy.sparse import (
     save_npz,
     load_npz
 )
+
+from .recommendation_utils import cosine_similarity_scores
 
 
 # =========================================================
@@ -313,10 +314,10 @@ def content_recommendation(
     # Similarity
     # -----------------------------------------------------
 
-    similarities = cosine_similarity(
+    similarities = cosine_similarity_scores(
         input_vector,
         transformed_data
-    ).flatten()
+    )
 
     # -----------------------------------------------------
     # Get recommendations

@@ -675,8 +675,28 @@ async function getRecommendations() {
         // Read response
         // -------------------------------------------------
 
-        const data =
-            await response.json();
+        const responseBody =
+            await response.text();
+
+        let data = null;
+
+        if (responseBody.trim()) {
+
+            try {
+
+                data = JSON.parse(responseBody);
+
+            } catch {
+
+                if (response.ok) {
+                    throw new Error(
+                        "The recommendation service returned an invalid response."
+                    );
+                }
+
+            }
+
+        }
 
 
         // -------------------------------------------------
@@ -686,8 +706,16 @@ async function getRecommendations() {
         if (!response.ok) {
 
             throw new Error(
-                data.detail ||
-                "Unable to get recommendations."
+                data?.detail ||
+                `Recommendation service returned HTTP ${response.status}. Please try again shortly.`
+            );
+
+        }
+
+        if (!data) {
+
+            throw new Error(
+                "The recommendation service returned an empty response. Please try again shortly."
             );
 
         }
@@ -729,6 +757,15 @@ async function getRecommendations() {
             message =
                 "Cannot connect to the backend. " +
                 "Make sure FastAPI is running.";
+
+            setBackendStatus(false);
+
+        }
+
+        if (
+            error.message.includes("HTTP 502") ||
+            error.message.includes("HTTP 503")
+        ) {
 
             setBackendStatus(false);
 

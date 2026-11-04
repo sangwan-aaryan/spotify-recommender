@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from sklearn.metrics.pairwise import cosine_similarity
+from .recommendation_utils import cosine_similarity_scores
 
 
 class HybridRecommenderSystem:
@@ -122,10 +122,10 @@ class HybridRecommenderSystem:
             ].reshape(1, -1)
         )
 
-        content_scores = cosine_similarity(
+        content_scores = cosine_similarity_scores(
             content_input,
             transformed_matrix
-        ).flatten()
+        )
 
         # -------------------------------------------------
         # Find track ID
@@ -168,10 +168,10 @@ class HybridRecommenderSystem:
         )
 
         collaborative_scores = (
-            cosine_similarity(
+            cosine_similarity_scores(
                 collaborative_input,
                 interaction_matrix
-            ).flatten()
+            )
         )
 
         # -------------------------------------------------

@@ -9,7 +9,7 @@ from scipy.sparse import (
     load_npz
 )
 
-from sklearn.metrics.pairwise import cosine_similarity
+from .recommendation_utils import cosine_similarity_scores
 
 
 # =========================================================
@@ -360,10 +360,10 @@ def collaborative_recommendation(
         ]
     )
 
-    similarities = cosine_similarity(
+    similarities = cosine_similarity_scores(
         input_vector,
         interaction_matrix
-    ).flatten()
+    )
 
     # -----------------------------------------------------
     # Top songs
