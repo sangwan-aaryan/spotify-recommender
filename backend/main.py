@@ -296,49 +296,6 @@ def health():
 
 
 # =========================================================
-# SONG CATALOG API
-# =========================================================
-
-@app.get("/songs")
-def list_songs():
-
-    if songs_data is None:
-
-        raise HTTPException(
-            status_code=503,
-            detail=(
-                "Song catalog data is not loaded. "
-                "Run: python -m backend.build_models"
-            )
-        )
-
-    required_columns = {"name", "artist"}
-
-    if not required_columns.issubset(songs_data.columns):
-
-        raise HTTPException(
-            status_code=500,
-            detail="Song catalog data is missing name or artist columns."
-        )
-
-    catalog = (
-        songs_data[["name", "artist"]]
-        .dropna()
-        .drop_duplicates()
-    )
-
-    songs = (
-        catalog
-        .sample(n=min(50, len(catalog)), random_state=42)
-        .sort_values(["name", "artist"])
-    )
-
-    return {
-        "songs": songs.to_dict(orient="records")
-    }
-
-
-# =========================================================
 # RECOMMENDATION API
 # =========================================================
 

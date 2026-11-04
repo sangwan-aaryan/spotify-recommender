@@ -11,7 +11,7 @@
 
 const API_URL = "/recommend";
 const HEALTH_URL = "/health";
-const SONGS_URL = "/songs";
+const SONGS_URL = "songs.json";
 
 
 // =========================================================

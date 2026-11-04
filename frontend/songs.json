@@ -1,0 +1,204 @@
+{
+  "songs": [
+    {
+      "name": "mr. brightside",
+      "artist": "the killers"
+    },
+    {
+      "name": "wonderwall",
+      "artist": "oasis"
+    },
+    {
+      "name": "come as you are",
+      "artist": "nirvana"
+    },
+    {
+      "name": "take me out",
+      "artist": "franz ferdinand"
+    },
+    {
+      "name": "creep",
+      "artist": "radiohead"
+    },
+    {
+      "name": "somebody told me",
+      "artist": "the killers"
+    },
+    {
+      "name": "viva la vida",
+      "artist": "coldplay"
+    },
+    {
+      "name": "karma police",
+      "artist": "radiohead"
+    },
+    {
+      "name": "the scientist",
+      "artist": "coldplay"
+    },
+    {
+      "name": "clocks",
+      "artist": "coldplay"
+    },
+    {
+      "name": "under the bridge",
+      "artist": "red hot chili peppers"
+    },
+    {
+      "name": "seven nation army",
+      "artist": "the white stripes"
+    },
+    {
+      "name": "feel good inc.",
+      "artist": "gorillaz"
+    },
+    {
+      "name": "chop suey!",
+      "artist": "system of a down"
+    },
+    {
+      "name": "fix you",
+      "artist": "coldplay"
+    },
+    {
+      "name": "lithium",
+      "artist": "nirvana"
+    },
+    {
+      "name": "song 2",
+      "artist": "blur"
+    },
+    {
+      "name": "in the end",
+      "artist": "linkin park"
+    },
+    {
+      "name": "chasing cars",
+      "artist": "snow patrol"
+    },
+    {
+      "name": "otherside",
+      "artist": "red hot chili peppers"
+    },
+    {
+      "name": "when you were young",
+      "artist": "the killers"
+    },
+    {
+      "name": "supermassive black hole",
+      "artist": "muse"
+    },
+    {
+      "name": "bohemian rhapsody",
+      "artist": "queen"
+    },
+    {
+      "name": "use somebody",
+      "artist": "kings of leon"
+    },
+    {
+      "name": "starlight",
+      "artist": "muse"
+    },
+    {
+      "name": "paranoid android",
+      "artist": "radiohead"
+    },
+    {
+      "name": "everlong",
+      "artist": "foo fighters"
+    },
+    {
+      "name": "no surprises",
+      "artist": "radiohead"
+    },
+    {
+      "name": "iris",
+      "artist": "goo goo dolls"
+    },
+    {
+      "name": "numb",
+      "artist": "linkin park"
+    },
+    {
+      "name": "zombie",
+      "artist": "the cranberries"
+    },
+    {
+      "name": "dani california",
+      "artist": "red hot chili peppers"
+    },
+    {
+      "name": "stairway to heaven",
+      "artist": "led zeppelin"
+    },
+    {
+      "name": "welcome to the jungle",
+      "artist": "guns n' roses"
+    },
+    {
+      "name": "clint eastwood",
+      "artist": "gorillaz"
+    },
+    {
+      "name": "paint it black",
+      "artist": "the rolling stones"
+    },
+    {
+      "name": "reptilia",
+      "artist": "the strokes"
+    },
+    {
+      "name": "the pretender",
+      "artist": "foo fighters"
+    },
+    {
+      "name": "all these things that i've done",
+      "artist": "the killers"
+    },
+    {
+      "name": "losing my religion",
+      "artist": "r.e.m."
+    },
+    {
+      "name": "paranoid",
+      "artist": "black sabbath"
+    },
+    {
+      "name": "time is running out",
+      "artist": "muse"
+    },
+    {
+      "name": "i kissed a girl",
+      "artist": "katy perry"
+    },
+    {
+      "name": "where is my mind?",
+      "artist": "pixies"
+    },
+    {
+      "name": "bitter sweet symphony",
+      "artist": "the verve"
+    },
+    {
+      "name": "toxicity",
+      "artist": "system of a down"
+    },
+    {
+      "name": "basket case",
+      "artist": "green day"
+    },
+    {
+      "name": "heart-shaped box",
+      "artist": "nirvana"
+    },
+    {
+      "name": "by the way",
+      "artist": "red hot chili peppers"
+    },
+    {
+      "name": "i will follow you into the dark",
+      "artist": "death cab for cutie"
+    }
+  ]
+}
